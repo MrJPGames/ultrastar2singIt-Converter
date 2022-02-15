@@ -144,6 +144,5 @@ if args.s:
 else:
     output_file = re.sub('[^A-Za-z0-9]+', '', us_data["TITLE"])
 
-write_metadata_file(us_data, output_file)
 sing_it = map_data(us_data, args.p)
 write_vxla_file(sing_it, output_file + '.vxla')
