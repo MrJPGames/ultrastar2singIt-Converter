@@ -2,15 +2,10 @@
 Converter to create Sing-It 2019 Files from Ultrastar text files
 
 prerequisites:
-youtube-dl
-ffmpeg
 python3
 
 Usage:
-python3 ultrastar2singit.py test.txt -s NothingCompares2U -yt https://www.youtube.com/watch?v=12345678901
+python3 ultrastar2singit.py test.txt -s InternalName
 
-NothingCompares2U from DLC lets_sing_2019_mit_deutschen_hits_best_of_90s_song_pack
-Title-ID 0100f5c009f83006
-
-
-See Release/Suppoort Thread on gbatemp https://gbatemp.net/threads/add-your-own-songs-to-lets-sing-2019.538379/
+See my tutorial on how to add songs to Let's Sing games here: https://gbatemp.net/threads/tutorial-add-custom-songs-to-lets-sing-2022-from-ultrastar.607817/
+See original Release/Suppoort Thread on gbatemp https://gbatemp.net/threads/add-your-own-songs-to-lets-sing-2019.538379/
