@@ -119,35 +119,8 @@ def write_vxla_file(sing_it, filename):
     write_intervals(sing_it["pages"], doc)
     xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(
         encoding="ISO-8859-1", indent="   ")
-    with open("titleid/romfs/Songs/vxla/" + filename, "wb") as f:
+    with open(filename, "wb") as f:
         f.write(xmlstr)
-
-
-def load_from_youtube(url, name):
-    yt = "youtube-dl " + url + \
-        " --write-thumbnail --recode-video mp4 --postprocessor-args '-vf fps=fps=25,scale=1280x720 -c:v libx264 -x264opts nal-hrd=cbr:force-cfr=1 -b:v 1415k -minrate 1415k -maxrate 1415k' --output 'tmp/" + \
-        name + ".%(ext)s'"
-    os.system(yt)
-    os.system("ffmpeg -i " + "tmp/" + name +
-              ".mp4 -vn -acodec libvorbis " + "tmp/" + name + ".ogg")
-    os.system("ffmpeg -i tmp/" + name +
-              ".mp4 -vcodec copy -an tmp/" + name + "no_audio.mp4 ")
-    os.rename("tmp/" + name + "no_audio.mp4",
-              "titleid/romfs/Songs/videos/" + name + ".mp4")
-    shutil.copyfile("tmp/" +
-                    name + ".ogg", "titleid/romfs/Songs/audio_preview/" + name + "_preview.ogg")
-    os.rename("tmp/" + name + ".ogg",
-              "titleid/romfs/Songs/audio/" + name + ".ogg")
-    im = Image.open("tmp/" + name + '.jpg')
-    im.save("titleid/romfs/Songs/covers/" + name + ".png")
-
-
-def mkdirs():
-    os.makedirs("titleid/romfs/Songs/audio", exist_ok=True)
-    os.makedirs("titleid/romfs/Songs/audio_preview", exist_ok=True)
-    os.makedirs("titleid/romfs/Songs/covers", exist_ok=True)
-    os.makedirs("titleid/romfs/Songs/videos", exist_ok=True)
-    os.makedirs("titleid/romfs/Songs/vxla", exist_ok=True)
 
 
 parser = argparse.ArgumentParser()
@@ -158,9 +131,6 @@ parser.add_argument(
 
 parser.add_argument(
     '-s', help='song to replace')
-
-parser.add_argument(
-    '-yt', help='youtube stream URL')
 
 args = parser.parse_args()
 
@@ -174,9 +144,6 @@ if args.s:
 else:
     output_file = re.sub('[^A-Za-z0-9]+', '', us_data["TITLE"])
 
-mkdirs()
 write_metadata_file(us_data, output_file)
 sing_it = map_data(us_data, args.p)
 write_vxla_file(sing_it, output_file + '.vxla')
-if args.yt:
-    load_from_youtube(args.yt, output_file)
